@@ -8,7 +8,12 @@ CSS/JS Versioning module for OpenMage/Magento1
 <a href="https://www.paypal.com/paypalme/fabrizioballiano" target=_blank title="Donate via PayPal"><img src="https://img.shields.io/badge/PayPal-00457C?style=for-the-badge&logo=paypal&logoColor=white" alt="Donate via PayPal" /></a>
 </td></tr></table>
 
-Features
+Quick description
+---------
+
+Adds `?v=` to all your CSS/JS and the value of `v` is the last git commit hash. 
+
+Rationale
 ---------
 
 To make search engines happy you need to use very long browser's cache lifetime
@@ -24,6 +29,9 @@ http_response_send_before event, uses as little preg_regex as possible in order 
 performant as possible to add the `v=xxx` parameter.
 
 This approach should work also with full page cache modules.
+
+Features
+---------
 
 **How to gen the version number to use in the `v=xxx` parameter?**
 
