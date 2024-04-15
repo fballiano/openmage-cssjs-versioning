@@ -1,4 +1,4 @@
-Git based CSS/JS Versioning module for OpenMage/Magento1
+CSS/JS Versioning module for OpenMage/Magento1
 =============================
 
 <table><tr><td align=center>
