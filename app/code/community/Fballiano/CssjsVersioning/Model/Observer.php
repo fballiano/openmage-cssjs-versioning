@@ -50,14 +50,14 @@ class Fballiano_CssjsVersioning_Model_Observer
         }
 
         // Process the script tags
-        $pattern = '/(<script.+?src\s*=\s*["\'])(.*?)(["\'].*>)/iU';
+        $pattern = '/(<script.+src\s*=\s*["\'])(.*)(["\'].*>)/iU';
         $html = preg_replace_callback($pattern, function($matches) use ($version) {
             $versionParameter = str_contains($matches[2], '?') ? '&v=' : '?v=';
             return $matches[1] . $matches[2] . $versionParameter . $version . $matches[3];
         }, $html);
 
         // Process the link tags
-        $pattern = '/(<link.+?href\s*=\s*["\'])(.*?)(["\'].*>)/iU';
+        $pattern = '/(<link.+href\s*=\s*["\'])(.*)(["\'].*>)/iU';
         $html = preg_replace_callback($pattern, function($matches) use ($version) {
             if (!preg_match('/rel\s*=\s*["\'](icon|stylesheet)["\']/iU', $matches[0])) {
                 return $matches[1] . ' ' . $matches[2] . $matches[3];
