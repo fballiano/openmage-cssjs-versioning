@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Fballiano_CssjsVersioning>
+            <version>0.1.0</version>
+        </Fballiano_CssjsVersioning>
+    </modules>
+    <global>
+        <models>
+            <fballiano_cssjsversioning>
+                <class>Fballiano_CssjsVersioning_Model</class>
+            </fballiano_cssjsversioning>
+        </models>
+    </global>
+    <frontend>
+        <events>
+            <http_response_send_before>
+                <observers>
+                    <fballiano_cssjsversioning>
+                        <class>fballiano_cssjsversioning/observer</class>
+                        <method>httpResponseSendBefore</method>
+                    </fballiano_cssjsversioning>
+                </observers>
+            </http_response_send_before>
+        </events>
+    </frontend>
+</config>

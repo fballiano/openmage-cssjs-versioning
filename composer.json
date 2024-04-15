@@ -1,0 +1,24 @@
+{
+  "name": "fballiano/openmage-cssjs-versioning",
+  "license": "OSL-3.0",
+  "type": "magento-module",
+  "description": "CSS/JS versioning module for OpenMage (and Magento 1.9)",
+  "keywords": [
+    "magento",
+    "magento1",
+    "openmage"
+  ],
+  "homepage": "https://github.com/fballiano/openmage-cssjs-versioning",
+  "require": {
+    "php": ">=7.4.0",
+    "magento-hackathon/magento-composer-installer": "*"
+  },
+  "authors": [
+    {
+      "name": "Fabrizio Balliano",
+      "email": "fabrizio@fabrizioballiano.com",
+      "homepage": "http://fabrizioballiano.com",
+      "role": "Developer"
+    }
+  ]
+}
