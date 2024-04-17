@@ -22,31 +22,11 @@ class Fballiano_CssjsVersioning_Model_Observer
         if (stripos($html, "</body>") === false) return;
 
         $version = Mage::app()->loadCache(self::CACHE_ID);
-
         if (!$version) {
-            $baseDir = Mage::getBaseDir();
-
-            // Read the contents of the HEAD file to get the current branch reference
-            $headContent = @file_get_contents("{$baseDir}/.git/HEAD");
-            if (!$headContent) {
-                return;
+            $version = $this->getVersionByGit();
+            if ($version === false) {
+                $version = $this->getVersionByTime();
             }
-
-            // Extract the branch name from the HEAD content
-            $parts = explode('/', trim($headContent));
-            $branchName = end($parts);
-            if (!$branchName) {
-                return;
-            }
-
-            // Extract last commit hash
-            $version = file_get_contents("{$baseDir}/.git/refs/heads/{$branchName}");
-            if (!$version) {
-                return;
-            }
-
-            $version = substr($version, 0, 6); // Only using 6 chars of the hash
-            Mage::app()->saveCache($version, self::CACHE_ID, [Mage_Core_Model_Config::CACHE_TAG], 3600); // Cache for 1 hour
         }
 
         // Process the script tags
@@ -67,5 +47,46 @@ class Fballiano_CssjsVersioning_Model_Observer
         }, $html);
 
         $response->setBody($html);
+    }
+
+    /**
+     * @return false|string
+     */
+    protected function getVersionByGit()
+    {
+        $baseDir = Mage::getBaseDir();
+
+        // Read the contents of the HEAD file to get the current branch reference
+        $headContent = @file_get_contents("{$baseDir}/.git/HEAD");
+        if (!$headContent) {
+            return false;
+        }
+
+        // Extract the branch name from the HEAD content
+        $parts = explode('/', trim($headContent));
+        $branchName = end($parts);
+        if (!$branchName) {
+            return false;
+        }
+
+        // Extract last commit hash
+        $version = file_get_contents("{$baseDir}/.git/refs/heads/{$branchName}");
+        if (!$version) {
+            return false;
+        }
+
+        $version = substr($version, 0, 6); // Only using 6 chars of the hash
+        Mage::app()->saveCache($version, self::CACHE_ID, [Mage_Core_Model_Config::CACHE_TAG], 3600); // Cache for 1 hour
+        return $version;
+    }
+
+    /**
+     * @return int
+     */
+    protected function getVersionByTime()
+    {
+        $version = time();
+        Mage::app()->saveCache($version, self::CACHE_ID, [Mage_Core_Model_Config::CACHE_TAG], 86400); // Cache for 24 hours
+        return $version;
     }
 }

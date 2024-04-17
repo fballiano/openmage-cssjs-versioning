@@ -35,16 +35,21 @@ Features
 
 **How to gen the version number to use in the `v=xxx` parameter?**
 
-This module uses the last `Git commit hash` (actually only the first 6 characters) as the version number.
+This module supports 2 approaches:
+1. using the last `Git commit hash` (only the first 6 characters) as the version number
+2. if that fails then a timestamp is used
 
-In order to do that your OpenMage base dir must also be the Git project root directory and the .git forlder
-has to be present in all servers you need this functionality to work.
+The git method is preferred because the generated version number won't change unless a new change is pushed
+on the repository. However, in order to work, OpenMage base dir must also be the Git project root directory
+and the .git folder has to be present in all servers you need this functionality to work.
 
 **Resuming:**
 - Automatically reads the last Git commit hash, extracts the first 6 characters
 - Saves this version number in OpenMage config cache for 1hour
   (if you flush config cache you also flush this value) in order to have a little
   impact on the filesystem as possible
+- If the git approach doesn't work, the version number because the current timestamp
+  (and gets cached for 24 hours)
 - Parsed the output HTML and intercepts all `<script` and `<link` tags, extracts the URLs
   and adds the `v=xxx` parameter (using `?v` or `&v` accordingly)
 - It only catches `<script` tags with `src` parameter and `<link` tags with `href` parameter
