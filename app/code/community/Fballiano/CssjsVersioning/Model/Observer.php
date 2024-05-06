@@ -9,11 +9,7 @@ class Fballiano_CssjsVersioning_Model_Observer
 {
     public const CACHE_ID = 'fballiano_cssjsversioning_cssjsversion';
 
-    /**
-     * @param Varien_Event_Observer $observer
-     * @return void
-     */
-    public function httpResponseSendBefore(Varien_Event_Observer $observer)
+    public function httpResponseSendBefore(Varien_Event_Observer $observer): void
     {
         $response = $observer->getResponse();
         $html = $response->getBody();
@@ -80,10 +76,7 @@ class Fballiano_CssjsVersioning_Model_Observer
         return $version;
     }
 
-    /**
-     * @return int
-     */
-    protected function getVersionByTime()
+    protected function getVersionByTime(): int
     {
         $version = time();
         Mage::app()->saveCache($version, self::CACHE_ID, [Mage_Core_Model_Config::CACHE_TAG], 86400); // Cache for 24 hours
